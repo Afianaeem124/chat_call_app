@@ -19,7 +19,7 @@ class _BottomNavigationBarExampleState
     HomeScreen(),
     ChatScreen(), // Replace with your DialPadScreen widget
 
-    FavoriteScreen()
+    //FavoriteScreen()
   ];
 
   void _onItemTapped(int index) {

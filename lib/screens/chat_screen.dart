@@ -1,4 +1,5 @@
 import 'package:chat_call_app/main.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
@@ -35,8 +36,6 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Chat'),
-        centerTitle: true,
         leading: IconButton(
             onPressed: () {
               Navigator.of(context)
@@ -45,6 +44,9 @@ class _ChatScreenState extends State<ChatScreen> {
             icon: Icon(
               Icons.arrow_back_ios,
             )),
+        title: Text('Chat with AI'),
+        centerTitle: true,
+        backgroundColor: Colors.amberAccent,
       ),
       body: Container(
         decoration: BoxDecoration(

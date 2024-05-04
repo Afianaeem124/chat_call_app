@@ -7,7 +7,7 @@ class AppTextStyle {
   static final ContactText = GoogleFonts.poppins(
       fontWeight: FontWeight.w400, fontSize: 18, color: AppColor.blackk);
   static final ContactHeADING = GoogleFonts.poppins(
-      fontWeight: FontWeight.w700, fontSize: 18, color: AppColor.GreyContact);
+      fontWeight: FontWeight.w700, fontSize: 25, color: AppColor.GreyContact);
   static final dialoghead = GoogleFonts.poppins(
       fontWeight: FontWeight.w500, fontSize: 20, color: AppColor.dialogHeading);
   static final Contactsubs = GoogleFonts.poppins(

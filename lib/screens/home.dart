@@ -47,78 +47,65 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {});
   }
 
-  void _toggleFavorite(Contact contact) async {
-    // Toggle the favorite status of the contact
-    contact.isFavorite = !contact.isFavorite;
-    await _databaseHelper.updateContact(contact);
-    // Update the corresponding contact in the _contacts list
-    int index = _contacts.indexWhere((c) => c.id == contact.id);
-    if (index != -1) {
-      _contacts[index] = contact;
-    }
-    setState(() {});
-    // Navigate to FavoriteScreen when the user marks a contact as favorite
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: AppColor.backgroundWhite,
+      backgroundColor: AppColor.backgroundWhite,
+      body: Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('assets/BG.jpg'), fit: BoxFit.cover)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SizedBox(
+              height: 40,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Container(
+                width: 350, // Convert from Fixed (377.48px)px to double
+                height: 70.03, // Convert from Fixed (70.03px)px to double
 
-        // image: AssetImage('assets/BG.jpg'),
-        body: Container(
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('assets/BG.jpg'), fit: BoxFit.cover)),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
-                child: Container(
-                  width: 350, // Convert from Fixed (377.48px)px to double
-                  height: 70.03, // Convert from Fixed (70.03px)px to double
-
-                  padding: EdgeInsets.symmetric(
-                      horizontal:
-                          30), // Convert from padding in px to EdgeInsets
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(80)),
-                    color: Colors.white,
-                    border: Border.all(
-                        width: 1.09,
-                        color: AppColor
-                            .LightGrey), // Convert from border in px to Border
-                  ),
-                  child: TextFormField(
-                    controller: _searchController,
-                    decoration: InputDecoration(
-                      labelText: 'Search Contacts',
-                      labelStyle: AppTextStyle.ContactText,
-                      prefixIcon: Icon(
-                        Icons.search,
-                        color: AppColor.blackk,
-                      ),
-                      border: InputBorder
-                          .none, // Remove default border from input field
+                padding: EdgeInsets.symmetric(
+                    horizontal: 30), // Convert from padding in px to EdgeInsets
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(80)),
+                  border: Border.all(
+                      width: 1.09,
+                      color: AppColor
+                          .LightGrey), // Convert from border in px to Border
+                ),
+                child: TextFormField(
+                  controller: _searchController,
+                  decoration: InputDecoration(
+                    labelText: 'Search Contacts',
+                    labelStyle: AppTextStyle.ContactText,
+                    prefixIcon: Icon(
+                      Icons.search,
+                      color: AppColor.blackk,
                     ),
+                    border: InputBorder
+                        .none, // Remove default border from input field
                   ),
                 ),
               ),
-              Expanded(
-                child: FutureBuilder<List<Contact>>(
-                  future: _databaseHelper.getAllContacts(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: _filteredContacts.length,
-                        itemBuilder: (context, index) {
-                          final contact = _filteredContacts[index];
-                          return Card(
-                            margin: EdgeInsets.symmetric(horizontal: 30),
-                            color: Colors.white,
+            ),
+            Expanded(
+              child: FutureBuilder<List<Contact>>(
+                future: _databaseHelper.getAllContacts(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: _filteredContacts.length,
+                      itemBuilder: (context, index) {
+                        final contact = _filteredContacts[index];
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 25),
+                          child: Card(
+                            color: Colors.amberAccent,
                             child: ListTile(
                               title: Text(
                                 contact.name,
@@ -133,19 +120,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                       _callNumber(contact.phoneNumber);
                                     },
                                   ),
-                                  // IconButton(
-                                  //   icon: Icon(
-                                  //     contact.isFavorite
-                                  //         ? Icons.favorite
-                                  //         : Icons.favorite_border,
-                                  //     color: contact.isFavorite
-                                  //         ? Colors.red
-                                  //         : null,
-                                  //   ),
-                                  //   onPressed: () {
-                                  //     // _toggleFavorite(contact);
-                                  //   },
-                                  // ),
                                   PopupMenuButton(
                                       elevation: 3,
                                       iconColor: Color(0xff5B5B5B),
@@ -188,37 +162,39 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               onTap: () {
                                 Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => UserDetail()),
-                                );
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => UserDetailsScreen(
+                                            contact: contact)));
                               },
                             ),
-                          );
-                        },
-                      );
-                    } else if (snapshot.hasError) {
-                      return Center(child: Text('Error: ${snapshot.error}'));
-                    } else {
-                      return Center(child: CircularProgressIndicator());
-                    }
-                  },
-                ),
+                          ),
+                        );
+                      },
+                    );
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  } else {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: AppColor.bluetone,
-          onPressed: () async {
-            final contact = await _showAddContactDialog(context);
-            if (contact != null) {
-              await _databaseHelper.insertContact(contact);
-              _loadContacts(); // Reload contacts after adding
-            }
-          },
-          child: Icon(Icons.add, color: Colors.white),
-        ));
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: AppColor.bluetone,
+        onPressed: () async {
+          final contact = await _showAddContactDialog(context);
+          if (contact != null) {
+            await _databaseHelper.insertContact(contact);
+            _loadContacts(); // Reload contacts after adding
+          }
+        },
+        child: Icon(Icons.add, color: Colors.white),
+      ),
+    );
   }
 
   void addContact(BuildContext context) async {
@@ -401,8 +377,6 @@ class DatabaseHelper {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT,
         phoneNumber TEXT
-        isFavorite INTEGER DEFAULT 0
-
       )
     ''');
   }
