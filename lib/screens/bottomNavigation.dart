@@ -41,10 +41,10 @@ class _BottomNavigationBarExampleState
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
               icon: Icon(
-                Icons.home_outlined,
+                Icons.contact_page_rounded,
                 size: 24,
               ),
-              label: 'Home',
+              label: 'Contacts',
               backgroundColor: Colors.white
               // Use label instead of title
               ),
@@ -52,10 +52,10 @@ class _BottomNavigationBarExampleState
             icon: Icon(Icons.message),
             label: 'Message AI',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: 'Favorite Contacts',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.favorite),
+          //   label: 'Favorite Contacts',
+          // ),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.amber,

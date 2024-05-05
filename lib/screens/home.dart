@@ -115,15 +115,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   IconButton(
-                                    icon: Icon(Icons.phone_outlined),
+                                    icon: Icon(Icons.phone_outlined,color: AppColor.backgroundWhite,),
                                     onPressed: () async {
                                       _callNumber(contact.phoneNumber);
                                     },
                                   ),
                                   PopupMenuButton(
                                       elevation: 3,
-                                      iconColor: Color(0xff5B5B5B),
-                                      color: AppColor.bluetone,
+                                      iconColor:AppColor.backgroundWhite,
+                                      color: AppColor.backgroundWhite,
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(10),
@@ -192,7 +192,7 @@ class _HomeScreenState extends State<HomeScreen> {
             _loadContacts(); // Reload contacts after adding
           }
         },
-        child: Icon(Icons.add, color: Colors.white),
+        child: Icon(Icons.person_2_outlined, color: Colors.white),
       ),
     );
   }

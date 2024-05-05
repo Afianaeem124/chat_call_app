@@ -44,7 +44,16 @@ class _ChatScreenState extends State<ChatScreen> {
             icon: Icon(
               Icons.arrow_back_ios,
             )),
-        title: Text('Chat with AI'),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Chat with AI'),
+            Container(
+              width: 90,
+              height: 55,
+              child: Image(image: AssetImage('assets/chatbot.png')))
+          ],
+        ),
         centerTitle: true,
         backgroundColor: Colors.amberAccent,
       ),
