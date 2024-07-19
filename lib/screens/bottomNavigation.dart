@@ -1,5 +1,5 @@
 import 'package:chat_call_app/screens/chat_screen.dart';
-import 'package:chat_call_app/screens/favouriteScreen.dart';
+
 import 'package:chat_call_app/screens/home.dart';
 import 'package:flutter/material.dart';
 
